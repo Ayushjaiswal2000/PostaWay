@@ -4,8 +4,8 @@ import express from "express";
 import userRouter from "./src/features/user/user.routes.js";
 import cookieParser from "cookie-parser";
 import { appLevelErrorHandlerMiddleware } from "./src/middlewares/errorHandler.js";
-import jobRouter from "./src/features/jobs/job.routes.js";
-import likeRouter from "./src/features/like/like.routes.js";
+import postRoute from "./src/features/post/post.routes.js"
+
 
 dotenv.config();
 
@@ -14,8 +14,8 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/users", userRouter);
-app.use("/api/job", jobRouter);
-app.use("/api/likes", likeRouter);
+app.use("/api/posts", postRoute);
+
 
 app.use(appLevelErrorHandlerMiddleware);
 
