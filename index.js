@@ -7,6 +7,7 @@ import userRouter from "./src/features/user/user.routes.js";
 import cookieParser from "cookie-parser";
 import { appLevelErrorHandlerMiddleware } from "./src/middlewares/errorHandler.js";
 import postRoute from "./src/features/post/post.routes.js"
+import commentRoute from "./src/features/comments/comments.route.js";
 
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRoute);
+app.use("/api/comments", commentRoute);
 
 
 app.use(appLevelErrorHandlerMiddleware);

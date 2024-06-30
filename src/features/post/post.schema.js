@@ -15,7 +15,18 @@ export const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users',
         required: true
-    }
+    },
+    comments: [{
+        content: {
+            type: String,
+            required: true
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'users',
+            required: true
+        }
+    }]
 });
 
 export default mongoose.model("Post", PostSchema);
