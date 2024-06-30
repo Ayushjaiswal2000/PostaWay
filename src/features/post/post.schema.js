@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
+const { Schema } = mongoose; // Destructure Schema from mongoose
 
-export  const PostSchema = new Schema({
+export const PostSchema = new Schema({
     caption: {
         type: String,
         required: true
@@ -16,7 +17,5 @@ export  const PostSchema = new Schema({
         required: true
     }
 });
-
-
 
 export default mongoose.model("Post", PostSchema);

@@ -1,9 +1,13 @@
-import { PostSchema  } from "../post/post.schema.js";
+import mongoose from "mongoose";
+import {PostSchema} from "../post/post.schema.js";
+
+
+const PostModel = mongoose.model("Post", PostSchema);
 
 class PostRepository {
     async createPost(data) {
         try {
-            const post = new PostSchema(data); // Use PostSchema here
+            const post = new PostModel(data); // Use PostSchema here
             return await post.save();
         } catch (error) {
             throw new Error(`Could not create post: ${error.message}`);
@@ -12,7 +16,7 @@ class PostRepository {
 
     async getPostById(postId) {
         try {
-            return await PostSchema.findById(postId).populate('user');
+            return await PostModel.findById(postId);
         } catch (error) {
             throw new Error(`Could not find post: ${error.message}`);
         }
@@ -20,7 +24,7 @@ class PostRepository {
 
     async getAllPosts() {
         try {
-            return await PostSchema.find().populate('user');
+            return await PostModel.find().populate('user');
         } catch (error) {
             throw new Error(`Could not fetch posts: ${error.message}`);
         }
@@ -28,7 +32,7 @@ class PostRepository {
 
     async updatePost(postId, data) {
         try {
-            return await PostSchema.findByIdAndUpdate(postId, data, { new: true });
+            return await PostModel.findByIdAndUpdate(postId, data, { new: true });
         } catch (error) {
             throw new Error(`Could not update post: ${error.message}`);
         }
@@ -36,7 +40,7 @@ class PostRepository {
 
     async deletePost(postId) {
         try {
-            return await PostSchema.findByIdAndDelete(postId);
+            return await PostModel.findByIdAndDelete(postId);
         } catch (error) {
             throw new Error(`Could not delete post: ${error.message}`);
         }
@@ -44,7 +48,7 @@ class PostRepository {
 
     async getUserPosts(userId) {
         try {
-            return await PostSchema.find({ user: userId });
+            return await PostModel.find({ user: userId });
         } catch (error) {
             throw new Error(`Could not fetch user posts: ${error.message}`);
         }

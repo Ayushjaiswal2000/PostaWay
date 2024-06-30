@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
+import multer from 'multer';
+import bodyParser from 'body-parser';
 import express from "express";
 import userRouter from "./src/features/user/user.routes.js";
 import cookieParser from "cookie-parser";

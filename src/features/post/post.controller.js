@@ -1,21 +1,38 @@
 import PostRepository from "./post.repository.js"
 
-class PostController {
-    async createPost(req, res) {
-        try {
-            const data = {
-                caption: req.body.caption,
-                imageUrl: req.body.imageUrl,
-                user: req.user._id
-            };
-            const post = await PostRepository.createPost(data);
-            res.status(201).json(post);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+
+export const createPost = async (req, res) => {
+    try {
+        // Extract caption and user ID from request
+        const { caption } = req.body;
+        const userId = req.user._id; // Assuming req.user._id is available after authentication
+
+        // Save file path or URL from multer upload
+        const imageUrl = req.file.path; // Adjust depending on how multer stores the file path
+
+        // Create new post object
+        const postData = {
+            caption,
+            imageUrl,
+            user: userId
+        };
+
+        // Call repository function to save post
+        const post = await PostRepository.createPost(postData);
+
+        // Respond with the created post
+        res.status(201).json(post);
+    } catch (error) {
+        if (error instanceof multer.MulterError) {
+            // Multer error handling
+            res.status(400).json({ success: false, error: error.message });
+        } else {
+            // Other errors
+            res.status(500).json({ success: false, error: error.message });
         }
     }
-
-    async getPostById(req, res) {
+};
+    export const getPostById = async(req, res)=> {
         try {
             const post = await PostRepository.getPostById(req.params.id);
             if (!post) {
@@ -27,7 +44,7 @@ class PostController {
         }
     }
 
-    async getAllPosts(req, res) {
+    export  const  getAllPosts = async(req, res)  =>{
         try {
             const posts = await PostRepository.getAllPosts();
             res.status(200).json(posts);
@@ -36,7 +53,7 @@ class PostController {
         }
     }
 
-    async updatePost(req, res) {
+   export const updatePost = async(req, res) =>{
         try {
             const post = await PostRepository.getPostById(req.params.id);
             if (!post) {
@@ -54,7 +71,7 @@ class PostController {
         }
     }
 
-    async deletePost(req, res) {
+    export const  deletePost= async(req, res) =>{
         try {
             const post = await PostRepository.getPostById(req.params.id);
             if (!post) {
@@ -71,6 +88,6 @@ class PostController {
             res.status(500).json({ error: error.message });
         }
     }
-}
 
-module.exports = new PostController();
+
+
