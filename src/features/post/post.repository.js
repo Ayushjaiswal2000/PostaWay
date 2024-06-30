@@ -24,15 +24,17 @@ class PostRepository {
 
     async getAllPosts() {
         try {
-            return await PostModel.find().populate('user');
+            return await PostModel.find();
         } catch (error) {
             throw new Error(`Could not fetch posts: ${error.message}`);
         }
     }
+    
 
-    async updatePost(postId, data) {
+    async updatePost(postId, postData) {
         try {
-            return await PostModel.findByIdAndUpdate(postId, data, { new: true });
+            return await PostModel.findByIdAndUpdate(postId, postData, { new: true });
+            
         } catch (error) {
             throw new Error(`Could not update post: ${error.message}`);
         }
