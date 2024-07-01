@@ -17,6 +17,6 @@ export const CommentSchema = new Schema({
         ref: 'users',
         required: true
     }
-}, );
+},{ strictPopulate: false } );
 
 export default mongoose.model('Comment', CommentSchema);

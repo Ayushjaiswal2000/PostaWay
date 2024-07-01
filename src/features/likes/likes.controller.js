@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 import { CommentSchema } from '../comments/comments.schema.js'; // Adjust path as necessary
 import { PostSchema } from "../post/post.schema.js";
 import { LikeSchema } from "../likes/likes.schema.js";
+import { userSchema } from "../user/user.schema.js";
 
 const PostModel = mongoose.model("Post", PostSchema);
 const CommentModel = mongoose.model('Comment', CommentSchema);
 const LikeModel = mongoose.model("Like", LikeSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 // Helper function to validate object existence
 const validateObjectExistence = async (type, objectId) => {
@@ -46,8 +48,11 @@ export const getLikesCountController = async (req, res) => {
     try {
         const objectId = req.params.id;
 
-        const count = await LikeRepository.getLikesCount(objectId);
-        res.send({ count });
+        const likes = await LikeRepository.getLikesWithUsers(objectId);
+        const count = likes.length;
+        const users = likes.map(like => like.user);
+
+        res.send({ count, users });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }

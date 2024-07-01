@@ -16,6 +16,6 @@ export const LikeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'comments'
     }
-});
+},{ strictPopulate: false });
 
 export default mongoose.model('Like', LikeSchema);
