@@ -1,6 +1,6 @@
 import express from 'express';
 import { createComment, updateComment, deleteComment,getCommentsByPostId } from '../comments/comments.controller.js';
-import { auth, checkCommentOwnership } from '../../middlewares/jwtAuth.js'; // Adjust path
+import { auth } from '../../middlewares/jwtAuth.js'; // Adjust path
 
 const router = express.Router();
 
