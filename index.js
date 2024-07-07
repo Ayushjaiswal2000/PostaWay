@@ -9,6 +9,7 @@ import { appLevelErrorHandlerMiddleware } from "./src/middlewares/errorHandler.j
 import postRoute from "./src/features/post/post.routes.js"
 import commentRoute from "./src/features/comments/comments.route.js";
 import likeRoute from "./src/features/likes/likes.router.js"
+import friendRoute from "./src/features/friendship/friendship.route.js"
 
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use("/api/users", userRouter);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
+app.use("/api/friends", friendRoute);
 
 
 app.use(appLevelErrorHandlerMiddleware);
