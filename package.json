@@ -23,7 +23,8 @@
     "jest-json-reporter": "^1.2.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.2.0",

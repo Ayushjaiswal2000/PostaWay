@@ -63,7 +63,17 @@ export const getAllUsers = async (req, res, next) => {
 
 export const updateUserProfile = async (req, res, next) => {
   const { userId } = req.params;
-  const updateData = req.body;
+  let updateData = req.body;
+
+  // Check if password is being updated
+  if (updateData.password) {
+    try {
+      updateData.password = await bcrypt.hash(updateData.password, 12);
+    } catch (err) {
+      return next(new customErrorHandler(500, 'Error hashing password'));
+    }
+  }
+
   const resp = await updateUserProfileRepo(userId, updateData);
   if (resp.success) {
     res.status(200).json({ success: true, res: resp.res });
